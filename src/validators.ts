@@ -1,11 +1,11 @@
-import type { Player } from "../types/index.d.ts";
+import type { UUID, Player } from "../types/index.d.ts";
 import { undashUUID } from "./utils.js";
 
 /**
- * Validates a UUIDv4 string
+ * Validates a UUID string both dashed or undashed
  *
  */
-export const validateUUID = (UUID: string): boolean => {
+export const validateUUID = (UUID: UUID): boolean => {
   if (typeof UUID !== "string") return false;
   UUID = undashUUID(UUID);
   if (UUID.length !== 32) return false;
