@@ -8,7 +8,8 @@
     "declaration": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["node"]
   },
   "include": ["src", "types"],
   "exclude": ["node_modules"]
