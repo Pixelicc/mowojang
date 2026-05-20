@@ -60,7 +60,7 @@ export default class Client {
       const fetchResponse = await this.axios.post("https://mowojang.matdoes.dev/", players, {
         cache: config?.cache ?? { ttl: 15 * 60 * 1000 },
       });
-      if (!Array.isArray(fetchResponse?.data)) return { data: null, error: "UNKOWN_ERROR" };
+      if (!Array.isArray(fetchResponse?.data)) return { data: null, error: "UNKNOWN_ERROR" };
 
       return {
         data: fetchResponse.data.map((player) => {
@@ -72,7 +72,7 @@ export default class Client {
         error: null,
       };
     } catch {
-      return { data: null, error: "UNKOWN_ERROR" };
+      return { data: null, error: "UNKNOWN_ERROR" };
     }
   }
 
@@ -156,7 +156,7 @@ export default class Client {
         error: null,
       };
     } catch {
-      return { data: null, error: "UNKOWN_ERROR" };
+      return { data: null, error: "UNKNOWN_ERROR" };
     }
   }
 
@@ -215,7 +215,7 @@ export default class Client {
         if (isAxiosError(fetchError)) {
           return { data: null, error: "INVALID_PLAYER" };
         }
-        return { data: null, error: "UNKOWN_ERROR" };
+        return { data: null, error: "UNKNOWN_ERROR" };
       });
   }
 

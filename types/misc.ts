@@ -30,6 +30,6 @@ export type MowojangResponse<D, E extends MowojangError | undefined> = Promise<
     }
   | {
       data: null;
-      error: E extends undefined ? "UNKOWN_ERROR" | "INVALID_INPUT" : E | "UNKOWN_ERROR" | "INVALID_INPUT";
+      error: E extends undefined ? "UNKNOWN_ERROR" | "INVALID_INPUT" : E | "UNKNOWN_ERROR" | "INVALID_INPUT";
     }
 >;
