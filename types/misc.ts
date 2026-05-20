@@ -4,6 +4,7 @@ export type ClientOptions = {
   timeout?: number;
   validation?: ValidationOptions;
   cache?: CacheOptions;
+  baseURL?: string;
 };
 
 export type AxiosOptions = {

@@ -20,10 +20,12 @@ import { undashUUID } from "./utils.js";
 export default class Client {
   private axios: AxiosCacheInstance;
   private validation: ValidationOptions;
+  private baseURL: string;
 
   constructor(clientOptions?: ClientOptions) {
     this.axios = axiosInstance(clientOptions);
     this.validation = clientOptions?.validation ?? {};
+    this.baseURL = clientOptions?.baseURL ?? "https://mowojang.matdoes.dev";
   }
 
   private shouldValidate(config?: MowojangRequestConfig): boolean {
@@ -59,7 +61,7 @@ export default class Client {
 
       const usePost = config?.usePost ?? false;
       if (usePost) {
-        const fetchResponse = await this.axios.post("https://mowojang.matdoes.dev/", players, {
+        const fetchResponse = await this.axios.post(this.baseURL, players, {
           cache: config?.cache ?? { ttl: 15 * 60 * 1000 },
         });
         if (!Array.isArray(fetchResponse?.data)) return { data: null, error: "UNKNOWN_ERROR" };
@@ -105,7 +107,7 @@ export default class Client {
       if (this.shouldValidate(config) && !validatePlayer(player, this.getValidationMinLength(config)))
         return { data: null, error: "INVALID_INPUT" };
 
-      const fetchResponse = await this.axios.get(`https://mowojang.matdoes.dev/${player}`, {
+      const fetchResponse = await this.axios.get(`${this.baseURL}/${player}`, {
         cache: config?.cache ?? { ttl: 15 * 60 * 1000 },
       });
 
@@ -191,7 +193,7 @@ export default class Client {
     if (!UUID) return { data: null, error: "INVALID_PLAYER" };
 
     return await this.axios
-      .get(`https://mowojang.matdoes.dev/session/minecraft/profile/${UUID}`, {
+      .get(`${this.baseURL}/session/minecraft/profile/${UUID}`, {
         cache: config?.cache ?? { ttl: 15 * 60 * 1000 },
       })
       .then((fetchResponse) => {
