@@ -108,7 +108,7 @@ export default class Client {
    * A Simple Wrapper to Retrieve Only the UUID of a Player's Profile
    *
    */
-  public async getUUID(username: Username, config?: MowojangRequestConfig): Promise<null | Username> {
+  public async getUUID(username: Username, config?: MowojangRequestConfig): Promise<null | UUID> {
     const profile = await this.getProfile(username, config);
     if (profile.error) return null;
     return profile.data.UUID;
@@ -118,7 +118,7 @@ export default class Client {
    * A Simple Wrapper to Retrieve Only the Username of a Player's Profile
    *
    */
-  public async getUsername(UUID: UUID, config?: MowojangRequestConfig): Promise<null | UUID> {
+  public async getUsername(UUID: UUID, config?: MowojangRequestConfig): Promise<null | Username> {
     const profile = await this.getProfile(UUID, config);
     if (profile.error) return null;
     return profile.data.username;
