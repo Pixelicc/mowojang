@@ -67,3 +67,17 @@ All Validator Functions are exported combined as `validate.x`.
   - [Website](https://matdoes.dev)
   - [GitHub](https://github.com/mat-1)
   - [Ko-Fi](https://ko-fi.com/matdoesdev)
+
+## 📡 [Status](https://mowojang-status.pixelic.dev/)
+
+<details>
+  <summary>Show status badges</summary>
+
+- Mowojang API - GET /:username -> ![30d uptime](https://mowojang-status.pixelic.dev/api/v1/endpoints/mowojang_mowojang-api---get--:username/uptimes/30d/badge.svg) ![latency](https://img.shields.io/badge/latency-116ms-blue)
+- Mowojang API - GET /:UUID -> ![30d uptime](https://mowojang-status.pixelic.dev/api/v1/endpoints/mowojang_mowojang-api---get--:uuid/uptimes/30d/badge.svg) ![latency](https://img.shields.io/badge/latency-116ms-blue)
+- Mowojang API - GET /session/minecraft/profile/:UUID -> ![30d uptime](https://mowojang-status.pixelic.dev/api/v1/endpoints/mowojang_mowojang-api---get--session-minecraft-profile-:uuid/uptimes/30d/badge.svg) ![latency](https://img.shields.io/badge/latency-135ms-blue)
+- Mowojang API - GET /users/profiles/minecraft/:username -> ![30d uptime](https://mowojang-status.pixelic.dev/api/v1/endpoints/mowojang_mowojang-api---get--users-profiles-minecraft-:username/uptimes/30d/badge.svg) ![latency](https://img.shields.io/badge/latency-116ms-blue)
+- Mowojang API - POST / - [username,UUID] -> ![30d uptime](https://mowojang-status.pixelic.dev/api/v1/endpoints/mowojang_mowojang-api---post-----[username-uuid]/uptimes/30d/badge.svg) ![latency](https://img.shields.io/badge/latency-115ms-blue)
+- Minecraft - GET /texture/:hash -> ![30d uptime](https://mowojang-status.pixelic.dev/api/v1/endpoints/minecraft_minecraft---get--texture-:hash/uptimes/30d/badge.svg) ![latency](https://img.shields.io/badge/latency-26ms-blue)
+
+</details>
