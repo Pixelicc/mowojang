@@ -38,6 +38,8 @@ const username = await Mowojang.getUsername("14727fae-fbdc-4aff-848c-d2713eb9939
 All above Functions accept an second Argument containing an optional config object.
 Cache options can also be passed there via the cache key. All available cache options can be found [here](https://axios-cache-interceptor.js.org/config/request-specifics#cache).
 
+Note: `getProfiles()` defaults to fetching each profile via individual GET requests to improve reliability. To use the POST bulk endpoint instead, pass `{ usePost: true }` as the second argument to `getProfiles()`.
+
 ## 🗃️ Utility Functions
 
 All Utility Functions are exported combined as `utlis.x`.

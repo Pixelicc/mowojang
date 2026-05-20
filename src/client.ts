@@ -45,7 +45,7 @@ export default class Client {
    */
   public async getProfiles(
     players: Player[],
-    config?: MowojangRequestConfig,
+    config?: MowojangRequestConfig & { usePost?: boolean },
   ): MowojangResponse<MowojangProfile[], undefined> {
     try {
       if (this.shouldValidate(config) && !validateArray(players, validatePlayer, this.getValidationMinLength(config)))
@@ -57,18 +57,35 @@ export default class Client {
         })
         .sort();
 
-      const fetchResponse = await this.axios.post("https://mowojang.matdoes.dev/", players, {
-        cache: config?.cache ?? { ttl: 15 * 60 * 1000 },
+      const usePost = config?.usePost ?? false;
+      if (usePost) {
+        const fetchResponse = await this.axios.post("https://mowojang.matdoes.dev/", players, {
+          cache: config?.cache ?? { ttl: 15 * 60 * 1000 },
+        });
+        if (!Array.isArray(fetchResponse?.data)) return { data: null, error: "UNKNOWN_ERROR" };
+
+        return {
+          data: fetchResponse.data.map((player) => {
+            return {
+              UUID: player.id,
+              username: player.name,
+            };
+          }),
+          error: null,
+        };
+      }
+
+      // Default fallback to GET requests via getProfile()
+      const profilePromises: MowojangResponse<MowojangProfile, "INVALID_PLAYER">[] = [];
+      players.forEach((player) => {
+        // @ts-ignore
+        profilePromises.push(this.getProfile(player, config));
       });
-      if (!Array.isArray(fetchResponse?.data)) return { data: null, error: "UNKNOWN_ERROR" };
+      const profiles = (await Promise.all(profilePromises)).filter((p) => p.data !== null).map((p) => p.data);
 
       return {
-        data: fetchResponse.data.map((player) => {
-          return {
-            UUID: player.id,
-            username: player.name,
-          };
-        }),
+        // @ts-ignore
+        data: profiles,
         error: null,
       };
     } catch {

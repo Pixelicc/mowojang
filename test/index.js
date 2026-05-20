@@ -126,15 +126,22 @@ describe("Functions", { timeout: 60000 }, function () {
       );
     });
   });
-  // POST-Endpoint seems to be not reliable for some time now <- Commented out this so test do not fail as often
-  /*describe("#getProfiles", function () {
+  describe("#getProfiles", function () {
     it("Should return an Array of Player Objects", async function () {
       const players = await Mowojang.getProfiles(["Pixelic", "Pixic"]);
       assert.strictEqual(Array.isArray(players.data), true);
-      assert.strictEqual(players.data[0].UUID, "14727faefbdc4aff848cd2713eb9939e");
-      assert.strictEqual(players.data[0].username, "Pixelic");
-      assert.strictEqual(players.data[1].UUID, "03197f1eabd74794b8668f513db2d2f0");
-      assert.strictEqual(players.data[1].username, "Pixic");
+      assert.strictEqual(
+        players.data[0].UUID === "14727faefbdc4aff848cd2713eb9939e" ||
+          players.data[0].UUID === "03197f1eabd74794b8668f513db2d2f0",
+        true,
+      );
+      assert.strictEqual(players.data[0].username === "Pixelic" || players.data[0].username === "Pixic", true);
+      assert.strictEqual(
+        players.data[1].UUID === "14727faefbdc4aff848cd2713eb9939e" ||
+          players.data[1].UUID === "03197f1eabd74794b8668f513db2d2f0",
+        true,
+      );
+      assert.strictEqual(players.data[1].username === "Pixelic" || players.data[1].username === "Pixic", true);
     });
     it("Should not be validating an Player whilst validation is forced off", async function () {
       const players = await Mowojang.getProfiles(
@@ -144,7 +151,7 @@ describe("Functions", { timeout: 60000 }, function () {
       assert.strictEqual(Array.isArray(players.data), true);
       assert.strictEqual(players.data.length, 0);
     });
-  });*/
+  });
   describe("#getProfile", function () {
     it("Should return an Player Object", async function () {
       const player = await Mowojang.getProfile("Pixelic");
