@@ -32,8 +32,8 @@
   },
   "dependencies": {
     "@pixelic/logger": "npm:@jsr/pixelic__logger@^0.0.6",
-    "axios": "^1.7.9",
-    "axios-cache-interceptor": "^1.6.2"
+    "axios": "^1.16.1",
+    "axios-cache-interceptor": "^1.12.0"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
