@@ -18,6 +18,22 @@ const UUID = await Mowojang.getUUID("Pixelic")
 const username = await Mowojang.getUsername("14727fae-fbdc-4aff-848c-d2713eb9939e")
 ```
 
+## ⚙️ Configuration
+
+The `Client` constructor accepts an **optional** configuration object.
+
+```TS
+const Mowojang = new MowojangClient({
+  baseURL: "https://mowojang.matdoes.dev", // The base URL for the Mowojang API
+  fallback: true, // Whether to fallback to mowojang.seraph.si if the default baseURL is down
+  timeout: 10000, // Request timeout in milliseconds
+  validation: {
+    enabled: true, // Enable automatic validation for inputs (UUIDs and Usernames)
+    minimumUsernameLength: 1, // Minimum username length required to pass validation (1 or 2), default is 3.
+  },
+})
+```
+
 > [!TIP]
 > If you plan on using this in a long-running process with heavy usage check out this guide on how to setup custom caching to prevent memory leaks.
 > Guide: [Custom-Caching](docs/custom-caching.md)
