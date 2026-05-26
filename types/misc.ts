@@ -2,16 +2,18 @@ import { LoggerConfig } from "@pixelic/logger";
 import type { CacheOptions, CacheRequestConfig } from "axios-cache-interceptor";
 
 export type ClientOptions = {
-  timeout?: number;
+  logger?: LoggerConfig;
   validation?: ValidationOptions;
+  timeout?: number;
   cache?: CacheOptions;
   baseURL?: string;
-  logger?: LoggerConfig;
+  fallback?: boolean;
 };
 
 export type AxiosOptions = {
   timeout?: number;
   cache?: CacheOptions;
+  fallback: boolean;
 };
 
 export type ValidationOptions = {

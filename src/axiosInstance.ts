@@ -39,16 +39,42 @@ export default (options: AxiosOptions, logger: Logger): AxiosCacheInstance => {
       return res;
     },
     (err) => {
-      if (err.code === "ECONNRESET") {
-        const host = new URL(err.config.url).host;
-        var cleanHost = host;
-        if (host === "mowojang.matdoes.dev") {
-          cleanHost = "Mowojang";
+      const isConnectionError =
+        err.code === "ECONNRESET" || err.code === "ETIMEDOUT" || (err?.response?.status ?? 0) >= 500;
+
+      if (isConnectionError) {
+        const fullURL = axios.getUri(err.config);
+        const host = new URL(fullURL).host;
+
+        /**
+         * If Mowojang (mowojang.matdoes.dev) is down, this falls back to Seraph (mowojang.seraph.si).
+         * This gets ignored if a different `baseURL` is passed in the initial config.
+         */
+        if (host === "mowojang.matdoes.dev" && !err.config._retry) {
+          err.config._retry = true;
+          err.config.url = fullURL.replace("mowojang.matdoes.dev", "mowojang.seraph.si");
+          if (err.config.baseURL) delete err.config.baseURL;
+          logger.critical(
+            "Mowojang",
+            `(${err.config.internalId}) Failed to establish connection to mowojang.matdoes.dev`,
+          );
+          if (options.fallback) {
+            logger.info("Mowojang", `(${err.config.internalId}) Retrying request with fallback of mowojang.seraph.si`);
+          }
+          logger.info("Mowojang", `Check Status of Mowojang on: https://mowojang-status.pixelic.dev`);
+          if (options.fallback) return instance(err.config);
         } else if (host === "mowojang.seraph.si") {
-          cleanHost = "Seraph";
+          logger.critical(
+            "Mowojang",
+            `(${err.config.internalId}) Failed to establish connection to mowojang.seraph.si`,
+          );
+          logger.info("Mowojang", `Check Status of Seraph on: https://mowojang-status.pixelic.dev`);
+        } else {
+          /**
+           * Logging fallback for a different `baseURL` passed in the initial config.
+           */
+          logger.critical("Mowojang", `(${err.config.internalId}) Failed to establish connection to ${host}`);
         }
-        logger.critical("Mowojang", `(${err.config.internalId}) Failed to establish Connection to ${host}`);
-        logger.info("Mowojang", `Check Status of ${cleanHost} on: https://mowojang-status.pixelic.dev`);
       }
       return Promise.reject(err);
     },
