@@ -16,14 +16,17 @@ import type {
 } from "../types/index.d.ts";
 import { validateArray, validatePlayer, validateUUID } from "./validators.js";
 import { undashUUID } from "./utils.js";
+import { Logger } from "@pixelic/logger";
 
 export default class Client {
+  private logger: Logger;
   private axios: AxiosCacheInstance;
   private validation: ValidationOptions;
   private baseURL: string;
 
   constructor(clientOptions?: ClientOptions) {
-    this.axios = axiosInstance(clientOptions);
+    this.logger = new Logger(clientOptions?.logger);
+    this.axios = axiosInstance(clientOptions ?? {}, this.logger);
     this.validation = clientOptions?.validation ?? {};
     this.baseURL = clientOptions?.baseURL ?? "https://mowojang.matdoes.dev";
   }
