@@ -24,7 +24,7 @@ export default (options: AxiosOptions, logger: Logger): AxiosCacheInstance => {
     // @ts-expect-error
     req.internalId = Math.random().toString(16).slice(2, 10).padEnd(8, "0");
     // @ts-expect-error
-    logger.debug("Pixelic/Mowojang", `(${req.internalId}) ${req.method?.toUpperCase()} ${axios.getUri(req)}`);
+    logger.debug("Mowojang", `(${req.internalId}) ${req.method?.toUpperCase()} ${axios.getUri(req)}`);
     return req;
   });
   instance.interceptors.response.use(
