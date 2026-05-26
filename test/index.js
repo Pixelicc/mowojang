@@ -1,4 +1,4 @@
-import { Client as MowojangClient, utils, validate } from "../dist/src/index.js";
+import { Client as MowojangClient, utils, validate } from "../dist/index.js";
 import { describe, it } from "node:test";
 import * as assert from "node:assert";
 
