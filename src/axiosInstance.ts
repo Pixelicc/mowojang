@@ -58,9 +58,11 @@ export default (options: AxiosOptions, logger: Logger): AxiosCacheInstance => {
             "Mowojang",
             `(${err.config.internalId}) Failed to establish connection to mowojang.matdoes.dev`,
           );
-          logger.info("Mowojang", `(${err.config.internalId}) Retrying request with fallback of mowojang.seraph.si`);
+          if (options.fallback) {
+            logger.info("Mowojang", `(${err.config.internalId}) Retrying request with fallback of mowojang.seraph.si`);
+          }
           logger.info("Mowojang", `Check Status of Mowojang on: https://mowojang-status.pixelic.dev`);
-          return instance(err.config);
+          if (options.fallback) return instance(err.config);
         } else if (host === "mowojang.seraph.si") {
           logger.critical(
             "Mowojang",

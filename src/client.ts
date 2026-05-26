@@ -26,9 +26,9 @@ export default class Client {
 
   constructor(clientOptions?: ClientOptions) {
     this.logger = new Logger(clientOptions?.logger);
-    this.axios = axiosInstance(clientOptions ?? {}, this.logger);
     this.validation = clientOptions?.validation ?? {};
-    this.baseURL = clientOptions?.baseURL ?? "https://mowojang.matdoes.dev";
+    this.baseURL = (clientOptions?.baseURL ?? "https://mowojang.matdoes.dev").toLowerCase();
+    this.axios = axiosInstance({ fallback: true, ...clientOptions }, this.logger);
   }
 
   private shouldValidate(config?: MowojangRequestConfig): boolean {
