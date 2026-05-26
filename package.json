@@ -10,7 +10,8 @@
     "build": "pnpm tsc",
     "test": "node test test/index.js",
     "prettier:check": "pnpm dlx prettier . --check",
-    "prettier:write": "pnpm dlx prettier . --write"
+    "prettier:write": "pnpm dlx prettier . --write",
+    "prepare": "pnpm build"
   },
   "repository": {
     "type": "git",
