@@ -47,7 +47,7 @@ export default (options: AxiosOptions, logger: Logger): AxiosCacheInstance => {
         const host = new URL(fullURL).host;
 
         /**
-         * If Mowojang (mowojang.matdoes.dev) is down, this falls back to  Seraph (mowojang.seraph.si).
+         * If Mowojang (mowojang.matdoes.dev) is down, this falls back to Seraph (mowojang.seraph.si).
          * This gets ignored if a different `baseURL` is passed in the initial config.
          */
         if (host === "mowojang.matdoes.dev" && !err.config._retry) {
