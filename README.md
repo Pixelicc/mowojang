@@ -1,4 +1,4 @@
-# mowojang-js
+# mowojang
 
 ![NPM Version](https://img.shields.io/npm/v/mowojang?label=NPM)
 ![NPM Downloads](https://img.shields.io/npm/dm/mowojang?label=Downloads)
