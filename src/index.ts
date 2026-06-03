@@ -1,9 +1,10 @@
-export { default as Client } from "./client.js";
 import { dashUUID, undashUUID } from "./utils.js";
 import { validatePlayer, validateUUID, validateUsername } from "./validators.js";
 import { buildStorage, buildMemoryStorage } from "axios-cache-interceptor";
 
-export type * from "../types/index.js";
+export type * from "../types/index.d.ts";
+
+export { default as Client } from "./client.js";
 
 export const validate = {
   player: validatePlayer,
