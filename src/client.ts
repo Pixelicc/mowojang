@@ -125,7 +125,7 @@ export default class Client {
   }
 
   /**
-   * A Simple Wrapper to Retrieve Only the UUID of a Player's Profile
+   * A simple Wrapper to retrieve only the UUID of a Player's Profile
    *
    */
   public async getUUID(username: Username, config?: MowojangRequestConfig): Promise<null | UUID> {
@@ -135,7 +135,7 @@ export default class Client {
   }
 
   /**
-   * A Simple Wrapper to Retrieve Only the Username of a Player's Profile
+   * A simple Wrapper to retrieve only the Username of a Player's Profile
    *
    */
   public async getUsername(UUID: UUID, config?: MowojangRequestConfig): Promise<null | Username> {
@@ -238,7 +238,7 @@ export default class Client {
   }
 
   /**
-   * A Simple Wrapper to Retrieve Only the Skin from a Player's Session
+   * A simple Wrapper to retrieve only the Skin from a Player's Session
    *
    */
   public async getSkin(player: Player, config?: MowojangRequestConfig): Promise<null | MowojangSkin> {
@@ -248,7 +248,7 @@ export default class Client {
   }
 
   /**
-   * A Simple Wrapper to Retrieve Only the Player's Skin from their Session Data Loaded into a Buffer
+   * A simple Wrapper to retrieve only the Player's Skin from their Session Data loaded into a Buffer
    *
    */
   public async getSkinBuffer(player: Player, config?: MowojangRequestConfig): Promise<null | Buffer> {
@@ -264,7 +264,7 @@ export default class Client {
   }
 
   /**
-   * A Simple Wrapper to Retrieve Only the Cape Data from a Player's Session
+   * A simple Wrapper to retrieve only the Cape Data from a Player's Session
    *
    */
   public async getCape(player: Player, config?: MowojangRequestConfig): Promise<null | MowojangCape> {
@@ -274,7 +274,7 @@ export default class Client {
   }
 
   /**
-   * A Simple Wrapper to Retrieve Only the Player's Cape from their Session Data Loaded into a Buffer
+   * A simple Wrapper to retrieve only the Player's Cape from their Session Data loaded into a Buffer
    *
    */
   public async getCapeBuffer(player: Player, config?: MowojangRequestConfig): Promise<null | Buffer> {
