@@ -83,13 +83,11 @@ export default class Client {
       // Default fallback to GET requests via getProfile()
       const profilePromises: MowojangResponse<MowojangProfile, "INVALID_PLAYER">[] = [];
       players.forEach((player) => {
-        // @ts-ignore
         profilePromises.push(this.getProfile(player, config));
       });
       const profiles = (await Promise.all(profilePromises)).filter((p) => p.data !== null).map((p) => p.data);
 
       return {
-        // @ts-ignore
         data: profiles,
         error: null,
       };
@@ -163,9 +161,8 @@ export default class Client {
         return player.toLowerCase();
       });
 
-      const sessionsPromises: MowojangResponse<MowojangSession, undefined>[] = [];
+      const sessionsPromises: MowojangResponse<MowojangSession, "INVALID_PLAYER">[] = [];
       players.forEach((player) => {
-        // @ts-ignore
         sessionsPromises.push(this.getSession(player, config));
       });
       const sessions = (await Promise.all(sessionsPromises))
@@ -173,7 +170,6 @@ export default class Client {
         .map((session) => session.data);
 
       return {
-        // @ts-ignore
         data: sessions,
         error: null,
       };
