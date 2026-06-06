@@ -79,12 +79,9 @@ All Validator Functions are exported combined as `validate.x`.
 
 ## 📎 Credits
 
-- Mowojang Creator (Mat):
-  - [Website](https://matdoes.dev)
-  - [GitHub](https://github.com/mat-1)
-  - [Ko-Fi](https://ko-fi.com/matdoesdev)
+- Mowojang Creator (Mat): [Website](https://matdoes.dev), [GitHub](https://github.com/mat-1) or [Ko-Fi](https://ko-fi.com/matdoesdev)
 
-## 📡 [Status](https://mowojang-status.pixelic.dev/)
+## 📡 [Mowojang Status](https://mowojang-status.pixelic.dev/)
 
 <details>
   <summary>Show status badges</summary>
