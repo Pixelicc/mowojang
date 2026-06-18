@@ -40,7 +40,8 @@ export default (options: AxiosOptions, logger: Logger): AxiosCacheInstance => {
     },
     (err) => {
       const isConnectionError =
-        err.code === "ECONNRESET" || err.code === "ETIMEDOUT" || (err?.response?.status ?? 0) >= 500;
+        ["ECONNRESET", "ETIMEDOUT", "ECONNREFUSED", "ENOTFOUND", "EAI_AGAIN"].includes(err.code) ||
+        (err?.response?.status ?? 0) >= 500;
 
       if (isConnectionError) {
         const fullURL = axios.getUri(err.config);
