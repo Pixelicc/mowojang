@@ -34,13 +34,13 @@
   "engines": {
     "node": ">=22.0.0"
   },
-  "dependencies": { 
+  "dependencies": {
     "axios": "^1.16.1",
     "axios-cache-interceptor": "^1.12.0"
   },
   "devDependencies": {
+    "@pixelic/logger": "jsr:~0.2.0",
     "@types/node": "^25.9.1",
-    "@pixelic/logger": "npm:@jsr/pixelic__logger@^0.0.6",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3"
   }
