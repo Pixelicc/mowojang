@@ -71,11 +71,15 @@ All Validator Functions are exported combined as `validate.x`.
 - `username()`: Returns whether the provided String is an valid Username (Accepts a second argument stating the minimum length required to pass the validation)
 - `player()` Combines the above
 
+## 📦 CLI
+
+You can also use this package from the CLI using [mowojang-cli](https://www.npmjs.com/package/mowojang-cli). ([Repository](https://github.com/Pixelicc/mowojang-cli))
+
 ## ⚙️ Development
 
 - `pnpm install`: Installs all required dependencies
-- `pnpm build`: Runs the TypeScript compiler
-- `pnpm test`: Runs tests for all Functions
+- `pnpm build`: Runs the compiler
+- `pnpm test`: Runs tests for all functions
 
 ## 📎 Credits
 
