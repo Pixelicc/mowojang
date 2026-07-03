@@ -5,7 +5,7 @@
 ![NPM License](https://img.shields.io/npm/l/mowojang?label=License)
 
 > [!IMPORTANT]
-> This is a third party wrapper for the [Mowojang-API](https://mowojang.matdoes.dev/)!
+> This is a third party wrapper for the [Mowojang](https://mowojang.matdoes.dev/) API!
 
 ## ✨ Quick Start
 
@@ -69,7 +69,7 @@ All Validator Functions are exported combined as `validate.x`.
 
 - `UUID()`: Returns whether the provided String is an valid UUID (Accepts both undashed and dashed UUIDv4 Strings)
 - `username()`: Returns whether the provided String is an valid Username (Accepts a second argument stating the minimum length required to pass the validation)
-- `player()` Combines the above
+- `player()`: Combines the above
 
 ## 📦 CLI
 
