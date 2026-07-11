@@ -10,7 +10,7 @@ const dependencies = Object.keys(packageJson.dependencies || {});
 const jsrDependencies = dependencies.filter((dep) => {
   // @ts-expect-error
   const version = packageJson.dependencies[dep];
-  return version.startsWith("npm:@jsr/") || version.startsWith("jsr:");
+  return version.startsWith("jsr:");
 });
 const npmDependencies = dependencies.filter((dep) => !jsrDependencies.includes(dep));
 
