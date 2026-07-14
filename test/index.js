@@ -20,56 +20,56 @@ describe("Utility Functions", { timeout: 1000 }, function () {
 describe("Validator Functions", { timeout: 1000 }, function () {
   describe("#UUID()", function () {
     it("Should be true on an valid UUIDv4 String", function () {
-      assert.strictEqual(validate.UUID("14727fae-fbdc-4aff-848c-d2713eb9939e"), true);
+      assert.ok(validate.UUID("14727fae-fbdc-4aff-848c-d2713eb9939e"));
     });
     it("Should be false on an invalid UUIDv4 String", function () {
-      assert.strictEqual(validate.UUID("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"), false);
+      assert.ok(!validate.UUID("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"));
     });
   });
   describe("#username()", function () {
     it("Should be true on an valid Minecraft Username", function () {
-      assert.strictEqual(validate.username("Pixelic"), true);
+      assert.ok(validate.username("Pixelic"));
     });
     it("Should be true on an valid Minecraft Username with 2 characters when 'minimumLength' is set to 2", function () {
-      assert.strictEqual(validate.username("AB", 2), true);
+      assert.ok(validate.username("AB", 2));
     });
     it("Should be true on an valid Minecraft Username with 1 characters when 'minimumLength' is set to 1", function () {
-      assert.strictEqual(validate.username("8", 1), true);
+      assert.ok(validate.username("8", 1));
     });
     it("Should be false on an invalid Minecraft Username", function () {
-      assert.strictEqual(validate.username("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername"), false);
+      assert.ok(!validate.username("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername"));
     });
     it("Should be false on an invalid Minecraft Username when 'minimumLength' is set to 2", function () {
-      assert.strictEqual(validate.username("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername", 2), false);
+      assert.ok(!validate.username("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername", 2));
     });
     it("Should be false on an invalid Minecraft Username when 'minimumLength' is set to 1", function () {
-      assert.strictEqual(validate.username("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername", 1), false);
+      assert.ok(!validate.username("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername", 1));
     });
   });
   describe("#player()", function () {
     it("Should be true on an valid UUIDv4 String", function () {
-      assert.strictEqual(validate.player("14727fae-fbdc-4aff-848c-d2713eb9939e"), true);
+      assert.ok(validate.player("14727fae-fbdc-4aff-848c-d2713eb9939e"));
     });
     it("Should be false on an invalid UUIDv4 String", function () {
-      assert.strictEqual(validate.player("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"), false);
+      assert.ok(!validate.player("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"));
     });
     it("Should be true on an valid Minecraft Username", function () {
-      assert.strictEqual(validate.player("Pixelic"), true);
+      assert.ok(validate.player("Pixelic"));
     });
     it("Should be true on an valid Minecraft Username with 2 characters when 'minimumLength' is set to 2", function () {
-      assert.strictEqual(validate.player("AB", 2), true);
+      assert.ok(validate.player("AB", 2));
     });
     it("Should be true on an valid Minecraft Username with 1 characters when 'minimumLength' is set to 1", function () {
-      assert.strictEqual(validate.player("8", 1), true);
+      assert.ok(validate.player("8", 1));
     });
     it("Should be false on an invalid Minecraft Username", function () {
-      assert.strictEqual(validate.player("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername"), false);
+      assert.ok(!validate.player("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername"));
     });
     it("Should be false on an invalid Minecraft Username when 'minimumLength' is set to 2", function () {
-      assert.strictEqual(validate.player("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername", 2), false);
+      assert.ok(!validate.player("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername", 2));
     });
     it("Should be false on an invalid Minecraft Username when 'minimumLength' is set to 1", function () {
-      assert.strictEqual(validate.player("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername", 1), false);
+      assert.ok(!validate.player("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername", 1));
     });
   });
 });
@@ -129,26 +129,24 @@ describe("Functions", { timeout: 60000 }, function () {
   describe("#getProfiles", function () {
     it("Should return an Array of Player Objects", async function () {
       const players = await Mowojang.getProfiles(["Pixelic", "Pixic"]);
-      assert.strictEqual(Array.isArray(players.data), true);
-      assert.strictEqual(
+      assert.ok(Array.isArray(players.data));
+      assert.ok(
         players.data[0].UUID === "14727faefbdc4aff848cd2713eb9939e" ||
           players.data[0].UUID === "03197f1eabd74794b8668f513db2d2f0",
-        true,
       );
-      assert.strictEqual(players.data[0].username === "Pixelic" || players.data[0].username === "Pixic", true);
-      assert.strictEqual(
+      assert.ok(players.data[0].username === "Pixelic" || players.data[0].username === "Pixic");
+      assert.ok(
         players.data[1].UUID === "14727faefbdc4aff848cd2713eb9939e" ||
           players.data[1].UUID === "03197f1eabd74794b8668f513db2d2f0",
-        true,
       );
-      assert.strictEqual(players.data[1].username === "Pixelic" || players.data[1].username === "Pixic", true);
+      assert.ok(players.data[1].username === "Pixelic" || players.data[1].username === "Pixic");
     });
     it("Should not be validating an Player whilst validation is forced off", async function () {
       const players = await Mowojang.getProfiles(
         ["Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername", "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"],
         { validate: false },
       );
-      assert.strictEqual(Array.isArray(players.data), true);
+      assert.ok(Array.isArray(players.data));
       assert.strictEqual(players.data.length, 0);
     });
   });
@@ -168,7 +166,7 @@ describe("Functions", { timeout: 60000 }, function () {
   describe("#getSessions", function () {
     it("Should return an Array of Player Session Objects", async function () {
       const playerSessions = await Mowojang.getSessions(["Pixic"]);
-      assert.strictEqual(Array.isArray(playerSessions.data), true);
+      assert.ok(Array.isArray(playerSessions.data));
       assert.strictEqual(playerSessions.data[0].UUID, "03197f1eabd74794b8668f513db2d2f0");
       assert.strictEqual(playerSessions.data[0].username, "Pixic");
       assert.strictEqual(
@@ -179,7 +177,7 @@ describe("Functions", { timeout: 60000 }, function () {
         playerSessions.data[0].skin.hash,
         "56dab0d218f41af5812c4b4692719ab3b2f28ef668338f0753336c79acb6b5fa",
       );
-      assert.strictEqual(playerSessions.data[0].skin.metadata.slim, true);
+      assert.ok(playerSessions.data[0].skin.metadata.slim);
       assert.strictEqual(
         playerSessions.data[0].cape.url,
         "http://textures.minecraft.net/texture/2340c0e03dd24a11b15a8b33c2a7e9e32abb2051b2481d0ba7defd635ca7a933",
@@ -188,14 +186,14 @@ describe("Functions", { timeout: 60000 }, function () {
         playerSessions.data[0].cape.hash,
         "2340c0e03dd24a11b15a8b33c2a7e9e32abb2051b2481d0ba7defd635ca7a933",
       );
-      assert.strictEqual(Array.isArray(playerSessions.data[0].actions), true);
+      assert.ok(Array.isArray(playerSessions.data[0].actions));
     });
     it("Should not be validating an Player whilst validation is forced off", async function () {
       const sessions = await Mowojang.getSessions(
         ["Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername", "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"],
         { validate: false },
       );
-      assert.strictEqual(Array.isArray(sessions.data), true);
+      assert.ok(Array.isArray(sessions.data));
       assert.strictEqual(sessions.data.length, 0);
     });
   });
@@ -212,7 +210,7 @@ describe("Functions", { timeout: 60000 }, function () {
         playerSession.data.skin.hash,
         "56dab0d218f41af5812c4b4692719ab3b2f28ef668338f0753336c79acb6b5fa",
       );
-      assert.strictEqual(playerSession.data.skin.metadata.slim, true);
+      assert.ok(playerSession.data.skin.metadata.slim);
       assert.strictEqual(
         playerSession.data.cape.url,
         "http://textures.minecraft.net/texture/2340c0e03dd24a11b15a8b33c2a7e9e32abb2051b2481d0ba7defd635ca7a933",
@@ -221,7 +219,7 @@ describe("Functions", { timeout: 60000 }, function () {
         playerSession.data.cape.hash,
         "2340c0e03dd24a11b15a8b33c2a7e9e32abb2051b2481d0ba7defd635ca7a933",
       );
-      assert.strictEqual(Array.isArray(playerSession.data.actions), true);
+      assert.ok(Array.isArray(playerSession.data.actions));
     });
     it("Should not be validating an Player whilst validation is forced off", async function () {
       const session = await Mowojang.getSession("Pixelic'sNameIsWayTooLongToBeAValidMinecraftUsername", {
