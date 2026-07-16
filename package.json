@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@pixelic/logger": "jsr:~0.2.0",
-    "@types/node": "^25.9.1",
+    "@types/node": "^26.1.1",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3"
   }
