@@ -24,6 +24,24 @@ export default class Client {
   private validation: ValidationOptions;
   private baseURL: string;
 
+  /**
+   * Creates a new Mowojang Client Instance
+   *
+   * @example
+   * ```TS
+   * const client = new Client();
+   * ```
+   *
+   * @example
+   * ```TS
+   * const client = new Client({
+   *   timeout: 5000,
+   *   validation: {
+   *     enabled: true
+   *   }
+   * });
+   * ```
+   */
   constructor(clientOptions?: ClientOptions) {
     this.logger = new Logger(clientOptions?.logger);
     this.validation = clientOptions?.validation ?? {};
@@ -47,6 +65,11 @@ export default class Client {
    * Returns an Array of Player Profiles consisting of their Usernames and UUIDs
    *
    * Players considered "INVALID" are excluded from the results
+   *
+   * @example
+   * ```TS
+   * const profiles = await client.getProfiles(["Pixelic", "14727faefbdc4aff848cd2713eb9939e"]);
+   * ```
    */
   public async getProfiles(
     players: Player[],
@@ -99,6 +122,10 @@ export default class Client {
   /**
    * Returns a Player's Profile consisting of their Username and UUID
    *
+   * @example
+   * ```TS
+   * const profile = await client.getProfile("Pixelic");
+   * ```
    */
   public async getProfile(
     player: Player,
@@ -127,6 +154,10 @@ export default class Client {
   /**
    * A simple Wrapper to retrieve only the UUID of a Player's Profile
    *
+   * @example
+   * ```TS
+   * const uuid = await client.getUUID("Pixelic");
+   * ```
    */
   public async getUUID(username: Username, config?: MowojangRequestConfig): Promise<null | UUID> {
     const profile = await this.getProfile(username, config);
@@ -137,6 +168,10 @@ export default class Client {
   /**
    * A simple Wrapper to retrieve only the Username of a Player's Profile
    *
+   * @example
+   * ```TS
+   * const username = await client.getUsername("14727faefbdc4aff848cd2713eb9939e");
+   * ```
    */
   public async getUsername(UUID: UUID, config?: MowojangRequestConfig): Promise<null | Username> {
     const profile = await this.getProfile(UUID, config);
@@ -148,6 +183,11 @@ export default class Client {
    * Returns an Array of Player Sessions consisting of their Usernames, UUIDs, Skins and Capes
    *
    * Players considered "INVALID" are excluded from the results
+   *
+   * @example
+   * ```TS
+   * const sessions = await client.getSessions(["Pixelic", "14727faefbdc4aff848cd2713eb9939e"]);
+   * ```
    */
   public async getSessions(
     players: Player[],
@@ -181,6 +221,10 @@ export default class Client {
   /**
    * Returns a Player's Sessions consisting of their Username, UUID, Skin and Cape
    *
+   * @example
+   * ```TS
+   * const session = await client.getSession("Pixelic");
+   * ```
    */
   public async getSession(
     player: Player,
@@ -240,6 +284,10 @@ export default class Client {
   /**
    * A simple Wrapper to retrieve only the Skin from a Player's Session
    *
+   * @example
+   * ```TS
+   * const skin = await client.getSkin("Pixelic");
+   * ```
    */
   public async getSkin(player: Player, config?: MowojangRequestConfig): Promise<null | MowojangSkin> {
     const session = await this.getSession(player, config);
@@ -250,6 +298,10 @@ export default class Client {
   /**
    * A simple Wrapper to retrieve only the Player's Skin from their Session Data loaded into a Buffer
    *
+   * @example
+   * ```TS
+   * const skinBuffer = await client.getSkinBuffer("Pixelic");
+   * ```
    */
   public async getSkinBuffer(player: Player, config?: MowojangRequestConfig): Promise<null | Buffer> {
     const session = await this.getSession(player, config);
@@ -266,6 +318,10 @@ export default class Client {
   /**
    * A simple Wrapper to retrieve only the Cape Data from a Player's Session
    *
+   * @example
+   * ```TS
+   * const cape = await client.getCape("Pixelic");
+   * ```
    */
   public async getCape(player: Player, config?: MowojangRequestConfig): Promise<null | MowojangCape> {
     const session = await this.getSession(player, config);
@@ -276,6 +332,10 @@ export default class Client {
   /**
    * A simple Wrapper to retrieve only the Player's Cape from their Session Data loaded into a Buffer
    *
+   * @example
+   * ```TS
+   * const capeBuffer = await client.getCapeBuffer("Pixelic");
+   * ```
    */
   public async getCapeBuffer(player: Player, config?: MowojangRequestConfig): Promise<null | Buffer> {
     const session = await this.getSession(player, config);
