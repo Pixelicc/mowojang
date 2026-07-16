@@ -4,6 +4,10 @@ import { undashUUID } from "./utils.js";
 /**
  * Validates a UUID string both dashed or undashed
  *
+ * @example
+ * ```TS
+ * validateUUID("14727fae-fbdc-4aff-848c-d2713eb9939e"); // true
+ * ```
  */
 export const validateUUID = (UUID: UUID): boolean => {
   if (typeof UUID !== "string") return false;
@@ -16,6 +20,11 @@ export const validateUUID = (UUID: UUID): boolean => {
  * Validates a Minecraft Username
  *
  * @param minimumLength Allows you to set a custom minimum length needed to pass the validation process. This option only exists as older Minecraft Usernames were allowed to be shorter than 3 characters.
+ *
+ * @example
+ * ```TS
+ * validateUsername("Pixelic"); // true
+ * ```
  */
 export const validateUsername = (username: string, minimumLength?: 1 | 2): boolean => {
   if (typeof username !== "string") return false;
@@ -28,6 +37,12 @@ export const validateUsername = (username: string, minimumLength?: 1 | 2): boole
  * Validates a Minecraft Player by either validating their Username or supplied UUID
  *
  * @param minimumUsernameLength Allows you to set a custom minimum length needed to pass the validation process. This option only exists as older Minecraft Usernames were allowed to be shorter than 3 characters.
+ *
+ * @example
+ * ```TS
+ * validatePlayer("Pixelic"); // true
+ * validatePlayer("14727fae-fbdc-4aff-848c-d2713eb9939e"); // true
+ * ```
  */
 export const validatePlayer = (player: Player, minimumUsernameLength?: 1 | 2): boolean =>
   validateUUID(player) || validateUsername(player, minimumUsernameLength);

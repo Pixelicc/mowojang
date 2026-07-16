@@ -1,6 +1,19 @@
 import { LoggerConfig } from "@pixelic/logger";
 import type { CacheOptions, CacheRequestConfig } from "axios-cache-interceptor";
 
+/**
+ * Options for the Mowojang Client Instance
+ *
+ * @example
+ * ```TS
+ * const options: ClientOptions = {
+ *   timeout: 5000,
+ *   validation: {
+ *     enabled: true
+ *   }
+ * };
+ * ```
+ */
 export type ClientOptions = {
   logger?: LoggerConfig;
   validation?: ValidationOptions;
