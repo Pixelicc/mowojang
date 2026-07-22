@@ -6,9 +6,6 @@
 ![Publish Size](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpackagephobia.com%2Fv2%2Fapi.json%3Fp%3Dmowojang&query=%24.publish.pretty&label=Publish%20Size)
 ![Install Size](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fpackagephobia.com%2Fv2%2Fapi.json%3Fp%3Dmowojang&query=%24.install.pretty&label=Install%20Size)
 
-> [!IMPORTANT]
-> This is a third party wrapper for the [Mowojang](https://mowojang.matdoes.dev/) API!
-
 ## ✨ Quick Start
 
 ```TS
