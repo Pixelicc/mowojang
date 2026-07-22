@@ -99,11 +99,7 @@ export default class Client {
         };
       }
 
-      // Default fallback to GET requests via getProfile()
-      const profilePromises: MowojangResponse<MowojangProfile, "INVALID_PLAYER">[] = [];
-      players.forEach((player) => {
-        profilePromises.push(this.getProfile(player, config));
-      });
+      const profilePromises = players.map((player) => this.getProfile(player, config));
       const profiles = (await Promise.all(profilePromises)).filter((p) => p.data !== null).map((p) => p.data);
 
       return {
@@ -197,10 +193,7 @@ export default class Client {
         return player.toLowerCase();
       });
 
-      const sessionsPromises: MowojangResponse<MowojangSession, "INVALID_PLAYER">[] = [];
-      players.forEach((player) => {
-        sessionsPromises.push(this.getSession(player, config));
-      });
+      const sessionsPromises = players.map((player) => this.getSession(player, config));
       const sessions = (await Promise.all(sessionsPromises))
         .filter((session) => session.data !== null)
         .map((session) => session.data);
@@ -228,7 +221,7 @@ export default class Client {
   ): MowojangResponse<MowojangSession, "INVALID_PLAYER"> {
     if (this.shouldValidate(config) && !validatePlayer(player, this.getValidationMinLength(config)))
       return { data: null, error: "INVALID_INPUT" };
-    const UUID = await this.getUUID(player);
+    const UUID = validateUUID(player) ? undashUUID(player) : await this.getUUID(player);
     if (!UUID) return { data: null, error: "INVALID_PLAYER" };
 
     return await this.axios
@@ -308,7 +301,7 @@ export default class Client {
       cache: config?.cache ?? { ttl: 24 * 60 * 60 * 1000 },
     });
 
-    return Buffer.from(fetchResponse.data, "base64");
+    return Buffer.from(fetchResponse.data);
   }
 
   /**
@@ -342,6 +335,6 @@ export default class Client {
       cache: config?.cache ?? { ttl: 30 * 24 * 60 * 60 * 1000 },
     });
 
-    return Buffer.from(fetchResponse.data, "base64");
+    return Buffer.from(fetchResponse.data);
   }
 }
