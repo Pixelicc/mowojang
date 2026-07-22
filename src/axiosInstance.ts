@@ -24,7 +24,7 @@ export default (options: AxiosOptions, logger: Logger): AxiosCacheInstance => {
     // @ts-expect-error
     req.internalId = Math.random().toString(16).slice(2, 10).padEnd(8, "0");
     // @ts-expect-error
-    logger.debug("Mowojang", `(${req.internalId}) ${req.method?.toUpperCase()} ${axios.getUri(req)}`);
+    logger.debug("Mowojang", `${req.method?.toUpperCase()} ${axios.getUri(req)}`, req.internalId);
     return req;
   });
   instance.interceptors.response.use(
@@ -32,8 +32,9 @@ export default (options: AxiosOptions, logger: Logger): AxiosCacheInstance => {
       if (res.cached) {
         logger.debug(
           "Mowojang",
+          `${res.stale ? "GET-CACHE-STALE" : "GET-CACHE"} ${axios.getUri(res.config)}`,
           // @ts-expect-error
-          `(${res.config.internalId}) ${res.stale ? "GET-CACHE-STALE" : "GET-CACHE"} ${axios.getUri(res.config)}`,
+          res.config.internalId,
         );
       }
       return res;
@@ -55,26 +56,20 @@ export default (options: AxiosOptions, logger: Logger): AxiosCacheInstance => {
           err.config._retry = true;
           err.config.url = fullURL.replace("mowojang.matdoes.dev", "mowojang.seraph.si");
           if (err.config.baseURL) delete err.config.baseURL;
-          logger.critical(
-            "Mowojang",
-            `(${err.config.internalId}) Failed to establish connection to mowojang.matdoes.dev`,
-          );
+          logger.critical("Mowojang", `Failed to establish connection to mowojang.matdoes.dev`, err.config.internalId);
           if (options.fallback) {
-            logger.info("Mowojang", `(${err.config.internalId}) Retrying request with fallback of mowojang.seraph.si`);
+            logger.info("Mowojang", `Retrying request with fallback of mowojang.seraph.si`, err.config.internalId);
           }
           logger.info("Mowojang", `Check Status of Mowojang on: https://mowojang-status.pixelic.dev`);
           if (options.fallback) return instance(err.config);
         } else if (host === "mowojang.seraph.si") {
-          logger.critical(
-            "Mowojang",
-            `(${err.config.internalId}) Failed to establish connection to mowojang.seraph.si`,
-          );
+          logger.critical("Mowojang", `Failed to establish connection to mowojang.seraph.si`, err.config.internalId);
           logger.info("Mowojang", `Check Status of Seraph on: https://mowojang-status.pixelic.dev`);
         } else {
           /**
            * Logging fallback for a different `baseURL` passed in the initial config.
            */
-          logger.critical("Mowojang", `(${err.config.internalId}) Failed to establish connection to ${host}`);
+          logger.critical("Mowojang", `Failed to establish connection to ${host}`, err.config.internalId);
         }
       }
       return Promise.reject(err);
