@@ -50,15 +50,11 @@ export default class Client {
   }
 
   private shouldValidate(config?: MowojangRequestConfig): boolean {
-    return this.validation?.enabled || config?.validation?.enabled || false;
+    return Boolean(this.validation?.enabled || config?.validation?.enabled);
   }
 
   private getValidationMinLength(config?: MowojangRequestConfig): 1 | 2 | undefined {
-    if (this.validation?.minimumUsernameLength === 1) return 1;
-    if (this.validation?.minimumUsernameLength === 2) return 2;
-    if (config?.validation?.minimumUsernameLength === 1) return 1;
-    if (config?.validation?.minimumUsernameLength === 2) return 2;
-    return undefined;
+    return this.validation?.minimumUsernameLength ?? config?.validation?.minimumUsernameLength;
   }
 
   /**
