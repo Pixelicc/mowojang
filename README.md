@@ -84,10 +84,10 @@ You can also use this package from the CLI using [mowojang-cli](https://www.npmj
 
 - Mowojang Creator (Mat): [Website](https://matdoes.dev), [GitHub](https://github.com/mat-1) or [Ko-Fi](https://ko-fi.com/matdoesdev)
 
-## 📡 [Mowojang Status](https://mowojang-status.pixelic.dev/)
+## 📡 [Status](https://mowojang-status.pixelic.dev/)
 
 <details>
-  <summary>Show status badges</summary>
+  <summary>Show badges</summary>
 
 - Mowojang API - GET /:username -> ![30d uptime](https://mowojang-status.pixelic.dev/api/v1/endpoints/mowojang-api_mowojang-api---get--:username/uptimes/30d/badge.svg) ![latency](https://mowojang-status.pixelic.dev/api/v1/endpoints/mowojang-api_mowojang-api---get--:username/response-times/30d/badge.svg)
 - Mowojang API - GET /:UUID -> ![30d uptime](https://mowojang-status.pixelic.dev/api/v1/endpoints/mowojang-api_mowojang-api---get--:uuid/uptimes/30d/badge.svg) ![latency](https://mowojang-status.pixelic.dev/api/v1/endpoints/mowojang-api_mowojang-api---get--:uuid/response-times/30d/badge.svg)
