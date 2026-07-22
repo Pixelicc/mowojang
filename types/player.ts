@@ -15,6 +15,6 @@ export type Username = string;
 /**
  * Minecraft UUIDv4 (both undashed and dashed will be accepted)
  *
- * @example b876ec32e396476ba1158438d83c67d4
+ * @example 14727fae-fbdc-4aff-848c-d2713eb9939e
  */
 export type UUID = string;
