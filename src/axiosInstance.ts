@@ -49,34 +49,39 @@ export default (options: AxiosOptions, logger: Logger): AxiosCacheInstance => {
         ["ECONNRESET", "ETIMEDOUT", "ECONNREFUSED", "ENOTFOUND", "EAI_AGAIN"].includes(err.code) ||
         (err?.response?.status ?? 0) >= 500;
 
-      if (isConnectionError) {
-        const fullURL = axios.getUri(err.config);
-        const host = new URL(fullURL).host;
+      if (!isConnectionError) return Promise.reject(err);
 
+      const fullURL = axios.getUri(err.config);
+      const host = new URL(fullURL).host;
+      const isPrimaryHost = host === "mowojang.matdoes.dev";
+      const isFallbackHost = host === "mowojang.seraph.si";
+      const shouldRetryWithFallback = isPrimaryHost && !err.config._retry;
+
+      if (shouldRetryWithFallback) {
         /**
          * If Mowojang (mowojang.matdoes.dev) is down, this falls back to Seraph (mowojang.seraph.si).
          * This gets ignored if a different `baseURL` is passed in the initial config.
          */
-        if (host === "mowojang.matdoes.dev" && !err.config._retry) {
-          err.config._retry = true;
-          err.config.url = fullURL.replace("mowojang.matdoes.dev", "mowojang.seraph.si");
-          if (err.config.baseURL) delete err.config.baseURL;
-          logger.critical("Mowojang", `Failed to establish connection to mowojang.matdoes.dev`, err.config.internalId);
-          if (options.fallback) {
-            logger.info("Mowojang", `Retrying request with fallback of mowojang.seraph.si`, err.config.internalId);
-          }
-          logger.info("Mowojang", `Check Status of Mowojang on: https://mowojang-status.pixelic.dev`);
-          if (options.fallback) return instance(err.config);
-        } else if (host === "mowojang.seraph.si") {
-          logger.critical("Mowojang", `Failed to establish connection to mowojang.seraph.si`, err.config.internalId);
-          logger.info("Mowojang", `Check Status of Seraph on: https://mowojang-status.pixelic.dev`);
-        } else {
-          /**
-           * Logging fallback for a different `baseURL` passed in the initial config.
-           */
-          logger.critical("Mowojang", `Failed to establish connection to ${host}`, err.config.internalId);
-        }
+        err.config._retry = true;
+        err.config.url = fullURL.replace("mowojang.matdoes.dev", "mowojang.seraph.si");
+        if (err.config.baseURL) delete err.config.baseURL;
       }
+
+      /**
+       * Logging fallback for a different `baseURL` passed in the initial config.
+       */
+      logger.critical("Mowojang", `Failed to establish connection to ${host}`, err.config.internalId);
+
+      const shouldFallback = shouldRetryWithFallback && options.fallback;
+      if (shouldFallback) {
+        logger.info("Mowojang", `Retrying request with fallback of mowojang.seraph.si`, err.config.internalId);
+      }
+      if (isPrimaryHost || isFallbackHost) {
+        const service = isFallbackHost ? "Seraph" : "Mowojang";
+        logger.info("Mowojang", `Check Status of ${service} on: https://mowojang-status.pixelic.dev`);
+      }
+
+      if (shouldFallback) return instance(err.config);
       return Promise.reject(err);
     },
   );
