@@ -17,7 +17,7 @@ const npmDependencies = dependencies.filter((dep) => !jsrDependencies.includes(d
 export default defineConfig({
   entry: ["src/index.ts"],
   format: ["esm"],
-  dts: true,
+  dts: false,
   clean: true,
   keepNames: true,
   treeshake: true,
