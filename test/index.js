@@ -261,18 +261,18 @@ describe("Cache Methods", { timeout: 1000 }, function () {
   });
 });
 
-describe("User set baseURL to be: https://mowojang.seraph.si", { timeout: 60000 }, function () {
-  const Seraph = new MowojangClient({ baseURL: "https://mowojang.seraph.si" });
+describe("User set baseURL to be: https://playerdb.co/api/player/minecraft", { timeout: 60000 }, function () {
+  const PlayerDB = new MowojangClient({ baseURL: "https://playerdb.co/api/player/minecraft" });
 
   describe("#getUUID", function () {
     it("Should convert an Minecraft Username to its UUIDv4 String", async function () {
-      const UUID = await Seraph.getUUID("Pixelic");
+      const UUID = await PlayerDB.getUUID("Pixelic");
       assert.strictEqual(UUID, "14727faefbdc4aff848cd2713eb9939e");
     });
   });
   describe("#getUsername", function () {
     it("Should convert an UUIDv4 String to its Minecraft Username", async function () {
-      const username = await Seraph.getUsername("14727faefbdc4aff848cd2713eb9939e");
+      const username = await PlayerDB.getUsername("14727faefbdc4aff848cd2713eb9939e");
       assert.strictEqual(username, "Pixelic");
     });
   });

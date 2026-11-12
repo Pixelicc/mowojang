@@ -24,7 +24,7 @@ The `Client` constructor accepts an **optional** configuration object.
 ```TS
 const Mowojang = new MowojangClient({
   baseURL: "https://mowojang.matdoes.dev", // The base URL for the Mowojang API
-  fallback: true, // Whether to fallback to mowojang.seraph.si if the default baseURL is down
+  fallback: true, // Whether to fallback to playerdb.co if the default baseURL is down
   timeout: 10000, // Request timeout in milliseconds
   validation: {
     enabled: true, // Enable automatic validation for inputs (UUIDs and Usernames)
@@ -32,6 +32,10 @@ const Mowojang = new MowojangClient({
   },
 })
 ```
+
+> [!NOTE]
+> Other Mojang APIs work too. Just point `baseURL` at the path and the username/UUID is appended:
+> `https://playerdb.co/api/player/minecraft` → `.../minecraft/Pixelic`
 
 > [!TIP]
 > If you plan on using this in a long-running process with heavy usage check out this guide on how to setup custom caching to prevent memory leaks.
