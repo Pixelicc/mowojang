@@ -51,7 +51,7 @@ export default class Client {
   constructor(clientOptions?: ClientOptions) {
     this.logger = new Logger(clientOptions?.logger);
     this.validation = clientOptions?.validation ?? {};
-    this.baseURL = (clientOptions?.baseURL ?? "https://mowojang.matdoes.dev").toLowerCase();
+    this.baseURL = (clientOptions?.baseURL ?? "https://mowojang.matdoes.dev").toLowerCase().replace(/\/+$/, "");
     this.axios = axiosInstance({ fallback: true, ...clientOptions }, this.logger);
     this.cache = {
       clear: async () => await this._clearCache(),
@@ -61,6 +61,24 @@ export default class Client {
       has: async (key: string, allowStale = false) => await this._hasCacheKey(key, allowStale),
       _storage: this.axios.storage,
     };
+  }
+
+  private isPathBasedURL(): boolean {
+    try {
+      const path = new URL(this.baseURL).pathname.replace(/\/+$/, "");
+      return path.length > 0;
+    } catch {
+      return false;
+    }
+  }
+
+  private getProfileURL(player: string): string {
+    return `${this.baseURL}/${player}`;
+  }
+
+  private getSessionURL(UUID: string): string {
+    if (this.isPathBasedURL()) return this.getProfileURL(UUID);
+    return `${this.baseURL}/session/minecraft/profile/${UUID}`;
   }
 
   private shouldValidate(config?: MowojangRequestConfig): boolean {
@@ -197,7 +215,7 @@ export default class Client {
         })
         .sort();
 
-      const usePost = config?.usePost ?? false;
+      const usePost = (config?.usePost ?? false) && !this.isPathBasedURL();
       if (usePost) {
         const fetchResponse = await this.axios.post(this.baseURL, players, {
           cache: config?.cache ?? { ttl: 60 * 60 * 1000 },
@@ -245,7 +263,7 @@ export default class Client {
       if (this.shouldValidate(config) && !validatePlayer(player, this.getValidationMinLength(config)))
         return { data: null, error: "INVALID_INPUT" };
 
-      const fetchResponse = await this.axios.get(`${this.baseURL}/${player}`, {
+      const fetchResponse = await this.axios.get(this.getProfileURL(player), {
         id: this.getCacheKey("profile", player),
         cache: config?.cache ?? { ttl: 60 * 60 * 1000 },
       });
@@ -367,11 +385,13 @@ export default class Client {
     if (!UUID) return { data: null, error: "INVALID_PLAYER" };
 
     return await this.axios
-      .get(`${this.baseURL}/session/minecraft/profile/${UUID}`, {
+      .get(this.getSessionURL(UUID), {
         id: this.getCacheKey("session", player),
         cache: config?.cache ?? { ttl: 15 * 60 * 1000 },
       })
       .then((fetchResponse) => {
+        if (fetchResponse.status === 404) return { data: null, error: "INVALID_PLAYER" as const };
+
         let textures: any = fetchResponse.data.properties.find((property: any) => property.name === "textures").value;
         let skin: MowojangSkin = null;
         let cape: MowojangCape = null;
