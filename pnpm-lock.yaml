@@ -10,10 +10,10 @@ importers:
     dependencies:
       axios:
         specifier: ^1.20.0
-        version: 1.20.0(debug@4.4.3)
+        version: 1.21.0(debug@4.4.3)
       axios-cache-interceptor:
         specifier: ^1.13.0
-        version: 1.13.0(axios@1.20.0(debug@4.4.3))
+        version: 1.13.0(axios@1.21.0(debug@4.4.3))
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
@@ -555,8 +555,8 @@ packages:
     peerDependencies:
       axios: ^1.19.0
 
-  axios@1.20.0:
-    resolution: {integrity: sha512-r8aOh8j9cGKpgQAqpzrUHnSIc6a59Y3Xf/cv8sy1DrHCkZHzQGEuoq1tARk6qSyDdtQGSDgpb9kFlruzPvrgwg==}
+  axios@1.21.0:
+    resolution: {integrity: sha512-YCzXMB53Q9PZBsh7yN7wtapit4WepwcHS2fP8QhGsBxSz5YtgYobV7GGlWlAJi+RxfU77GQTQi2DSLUma42EYA==}
 
   balanced-match@4.0.4:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
@@ -1502,16 +1502,16 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  axios-cache-interceptor@1.13.0(axios@1.20.0(debug@4.4.3)):
+  axios-cache-interceptor@1.13.0(axios@1.21.0(debug@4.4.3)):
     dependencies:
-      axios: 1.20.0(debug@4.4.3)
+      axios: 1.21.0(debug@4.4.3)
       cache-parser: 1.2.6
       fast-defer: 1.1.9
       http-vary: 1.0.3
       object-code: 2.0.0
       try: 1.0.3
 
-  axios@1.20.0(debug@4.4.3):
+  axios@1.21.0(debug@4.4.3):
     dependencies:
       follow-redirects: 1.16.1(debug@4.4.3)
       form-data: 4.0.6
