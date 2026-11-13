@@ -1,7 +1,7 @@
 import axios from "axios";
 import { type AxiosCacheInstance, setupCache } from "axios-cache-interceptor";
 import type { AxiosOptions } from "../types/index.d.ts";
-import type { Logger } from "@pixelic/logger";
+import { LogLevels, type Logger } from "@pixelic/logger";
 import { undashUUID } from "./utils.js";
 
 declare const VERSION: [string];
@@ -9,6 +9,8 @@ declare const VERSION: [string];
 const PRIMARY_HOST = "mowojang.matdoes.dev";
 const FALLBACK_HOST = "playerdb.co";
 const PLAYERDB_LOOKUP = "https://playerdb.co/api/player/minecraft";
+
+const isDebugEnabled = (logger: Logger): boolean => LogLevels.DEBUG >= LogLevels[logger.minLevel];
 
 const rewriteToPlayerDB = (fullURL: string, method?: string): string | null => {
   if ((method ?? "get").toLowerCase() !== "get") return null;
@@ -72,8 +74,10 @@ export default (options: AxiosOptions, logger: Logger): AxiosCacheInstance => {
   instance.interceptors.request.use((req) => {
     // @ts-expect-error
     req.internalId = Math.random().toString(16).slice(2, 10).padEnd(8, "0");
-    // @ts-expect-error
-    logger.debug("Mowojang", `${req.method?.toUpperCase()} ${axios.getUri(req)}`, req.internalId);
+    if (isDebugEnabled(logger)) {
+      // @ts-expect-error
+      logger.debug("Mowojang", `${req.method?.toUpperCase()} ${axios.getUri(req)}`, req.internalId);
+    }
     return req;
   });
   instance.interceptors.response.use(
@@ -89,7 +93,7 @@ export default (options: AxiosOptions, logger: Logger): AxiosCacheInstance => {
         }
       }
 
-      if (res.cached) {
+      if (res.cached && isDebugEnabled(logger)) {
         logger.debug(
           "Mowojang",
           `${res.stale ? "GET-CACHE-STALE" : "GET-CACHE"} ${axios.getUri(res.config)}`,

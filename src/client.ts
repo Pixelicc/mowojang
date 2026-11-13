@@ -17,9 +17,11 @@ import type {
 } from "../types/index.d.ts";
 import { validateArray, validatePlayer, validateUUID } from "./validators.js";
 import { undashUUID } from "./utils.js";
-import { Logger } from "@pixelic/logger";
+import { LogLevels, Logger } from "@pixelic/logger";
 
 declare const VERSION: [string];
+
+const isDebugEnabled = (logger: Logger): boolean => LogLevels.DEBUG >= LogLevels[logger.minLevel];
 
 export default class Client {
   private logger: Logger;
@@ -97,7 +99,8 @@ export default class Client {
     return `${prefix}:${normalized}`;
   }
 
-  private async mirrorProfileCacheEntries(
+  private async mirrorPlayerCacheEntries(
+    prefix: "profile" | "session",
     ID: string,
     username: Username,
     UUID: UUID,
@@ -108,7 +111,7 @@ export default class Client {
       if (!storage.get || !storage.set) {
         this.logger.warning(
           "Mowojang",
-          `No Storage Methods available or set up for Profile Mirror to work with`,
+          `No Storage Methods available or set up for ${prefix} Mirror to work with`,
           internalId,
         );
         return;
@@ -117,16 +120,21 @@ export default class Client {
       const value = (await storage.get(ID)) as any;
       if (!value) return;
 
-      const usernameID = this.getCacheKey("profile", username);
-      const uuidID = this.getCacheKey("profile", UUID);
+      const usernameID = this.getCacheKey(prefix, username);
+      const uuidID = this.getCacheKey(prefix, UUID);
+      const label = prefix.toUpperCase();
 
       if (ID !== usernameID) {
         await storage.set(usernameID, value);
-        this.logger.debug("Mowojang", `PROFILE-CACHE-MIRROR-SET ${ID} -> ${usernameID}`, internalId);
+        if (isDebugEnabled(this.logger)) {
+          this.logger.debug("Mowojang", `${label}-CACHE-MIRROR-SET ${ID} -> ${usernameID}`, internalId);
+        }
       }
       if (ID !== uuidID) {
         await storage.set(uuidID, value);
-        this.logger.debug("Mowojang", `PROFILE-CACHE-MIRROR-SET ${ID} -> ${uuidID}`, internalId);
+        if (isDebugEnabled(this.logger)) {
+          this.logger.debug("Mowojang", `${label}-CACHE-MIRROR-SET ${ID} -> ${uuidID}`, internalId);
+        }
       }
     } catch (error) {
       this.logger.error("Mowojang", error instanceof Error ? error.message : "Unknown Error", internalId);
@@ -275,7 +283,8 @@ export default class Client {
       if (config?.cache !== false && (typeof config?.cache !== "object" || config.cache.enabled !== false)) {
         // @ts-expect-error
         const internalId = fetchResponse.config?.internalId as string;
-        await this.mirrorProfileCacheEntries(
+        await this.mirrorPlayerCacheEntries(
+          "profile",
           fetchResponse.id,
           fetchResponse.data.name,
           fetchResponse.data.id,
@@ -386,10 +395,10 @@ export default class Client {
 
     return await this.axios
       .get(this.getSessionURL(UUID), {
-        id: this.getCacheKey("session", player),
+        id: this.getCacheKey("session", UUID),
         cache: config?.cache ?? { ttl: 15 * 60 * 1000 },
       })
-      .then((fetchResponse) => {
+      .then(async (fetchResponse) => {
         if (fetchResponse.status === 404) return { data: null, error: "INVALID_PLAYER" as const };
 
         let textures: any = fetchResponse.data.properties.find((property: any) => property.name === "textures").value;
@@ -412,6 +421,18 @@ export default class Client {
               hash: textures.CAPE.url.split("/").at(-1),
             };
           }
+        }
+
+        if (config?.cache !== false && (typeof config?.cache !== "object" || config.cache.enabled !== false)) {
+          // @ts-expect-error
+          const internalId = fetchResponse.config?.internalId as string;
+          await this.mirrorPlayerCacheEntries(
+            "session",
+            fetchResponse.id,
+            fetchResponse.data.name,
+            fetchResponse.data.id,
+            internalId,
+          );
         }
 
         return {

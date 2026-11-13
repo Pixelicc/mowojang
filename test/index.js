@@ -258,6 +258,10 @@ describe("Cache Methods", { timeout: 1000 }, function () {
       const result = await Mowojang.cache.has("profile:username:00000000-0000-0000-0000-000000000000");
       assert.ok(!result);
     });
+    it("Should share session cache between username and UUID lookups", async function () {
+      assert.ok(await Mowojang.cache.has("session:uuid:03197f1eabd74794b8668f513db2d2f0"));
+      assert.ok(await Mowojang.cache.has("session:username:pixic"));
+    });
   });
 });
 
